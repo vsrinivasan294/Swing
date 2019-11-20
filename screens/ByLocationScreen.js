@@ -23,8 +23,8 @@ const Images = [
 
 const { width, height } = Dimensions.get("window");
 
-const CARD_HEIGHT = height / 4;
-const CARD_WIDTH = CARD_HEIGHT - 50;
+const CARD_HEIGHT = height / 5;
+const CARD_WIDTH = CARD_HEIGHT + 100;
 
 export default class screens extends Component {
   state = {
