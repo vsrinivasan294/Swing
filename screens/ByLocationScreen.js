@@ -8,12 +8,14 @@ import {
   ScrollView,
   Animated,
   Image,
+  ImageBackground,
   Dimensions,
   TouchableOpacity,
   Navigator,
 } from "react-native";
 
 import MapView from "react-native-maps";
+import { SearchBar } from 'react-native-elements';
 
 const Images = [
   { uri: "https://i.imgur.com/iwyuxOR.jpg" },
@@ -144,6 +146,13 @@ export default class screens extends Component {
     });
 
     return (
+      <>
+      <SearchBar
+          ref='searchBar'
+          placeholder='Find me'
+          barStyle="black"
+          showsCancelButtonWhileEditing={false}
+        />
       <View style={styles.container}>
         <MapView
           ref={map => this.map = map}
@@ -171,6 +180,7 @@ export default class screens extends Component {
             );
           })}
         </MapView>
+        
         <Animated.ScrollView
           horizontal
           scrollEventThrottle={1}
@@ -207,12 +217,27 @@ export default class screens extends Component {
             </TouchableOpacity>
           ))}
         </Animated.ScrollView>
+
+        
+      </View>    
+      <TouchableOpacity style= {styles.addButton} onPress = {() => this.props.navigation.navigate('Add')}>
+      <View>
+      <Image style={styles.addButton} source={require("./assets/images/add.png")}/>
       </View>
+</TouchableOpacity>
+    </>
+
     );
   }
 }
 
 const styles = StyleSheet.create({
+  addButton: {
+    width:30,
+       height:30,
+    borderRadius: 15,
+
+  },
   container: {
     flex: 1,
   },

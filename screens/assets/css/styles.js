@@ -18,7 +18,7 @@ h2: {
     textAlign: 'center',
   },
 h3: {
-  color: 'white',
+  color: 'black',
   fontSize: 36,
   justifyContent: 'center',
   textAlign: 'center',
@@ -62,6 +62,8 @@ input: {
     width: 200,
     height: 44,
     padding: 10,
+    marginLeft: 40,
+    marginRight: 40,
     borderWidth: 1,
     borderColor: 'black',
     marginBottom: 10,

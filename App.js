@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from "react";
 import { Button, View, Text, Image } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation'; // Version can be specified in package.json
 import logo from './assets/images/logo.jpg';
@@ -14,7 +14,9 @@ import StartingScreen from './screens/StartingScreen';
 import ByLocationScreen from './screens/ByLocationScreen';
 import BySpotScreen from './screens/BySpotScreen';
 import ImageScreen from './screens/ImageScreen';
+import DescriptionScreen from './screens/DescriptionScreen'
 import HeaderScreen from './screens/HeaderScreen';
+import AddNameScreen from './screens/AddNameScreen'
 //import TestScreen from './screens/TestScreen';
 
 
@@ -30,7 +32,9 @@ const RootStack = createStackNavigator(
     ByLocation: ByLocationScreen, 
     BySpot: BySpotScreen,
     Image: ImageScreen,
+    Description: DescriptionScreen,
     HeaderScreen: HeaderScreen,
+    Add: AddNameScreen,
     //Test: TestScreen,
   },
   {

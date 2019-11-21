@@ -8,8 +8,8 @@ container: {
     justifyContent: 'center',
   },
 h1: {
-    color: 'white',
-    backgroundColor: '#FFFFFF',
+    color: 'black',
+    backgroundColor: '#000000',
     fontSize: 60,
   },
 h2: {
@@ -42,7 +42,7 @@ bottomContainer: {
 button: {
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: '#FFFFFF',
+  backgroundColor: '#000000',
   borderWidth: 4, 
   borderColor: 'white',
   color: 'white',
