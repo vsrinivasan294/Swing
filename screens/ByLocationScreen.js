@@ -27,6 +27,20 @@ const CARD_HEIGHT = height / 5;
 const CARD_WIDTH = CARD_HEIGHT + 100;
 
 export default class screens extends Component {
+  static navigationOptions = {
+    title: "Swing",
+    headerLeft: null,
+    headerStyle: {
+      backgroundColor: "#feac00"
+    },
+    headerTitleStyle: {
+      fontFamily: 'Hoefler Text',
+      fontWeight: 'bold',
+      fontStyle: 'italic',
+      fontSize: 26,
+      color: '#e52b06'
+    },
+  };
   state = {
     markers: [
       {

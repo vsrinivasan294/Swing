@@ -5,6 +5,20 @@ import styles from './assets/css/styles';
 
 
 export default class HomeScreen extends React.Component {
+  static navigationOptions = {
+    title: "Swing",
+    headerLeft: null,
+    headerStyle: {
+      backgroundColor: "#feac00"
+    },
+    headerTitleStyle: {
+      fontFamily: 'Hoefler Text',
+      fontWeight: 'bold',
+      fontStyle: 'italic',
+      fontSize: 26,
+      color: '#e52b06'
+    },
+  };
   render() {
     return (
 

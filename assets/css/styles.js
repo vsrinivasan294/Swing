@@ -3,18 +3,18 @@ const styles = StyleSheet.create({
 
 container: {
     flex: 1,
-    backgroundColor: '#F9CB9C',
+    backgroundColor: '#9FA8DA',
     alignItems: 'center',
     justifyContent: 'center',
   },
 h1: {
     color: 'white',
-    backgroundColor: '#C0C0C0',
+    backgroundColor: '#FFFFFF',
     fontSize: 60,
   },
 h2: {
     color: 'white',
-    backgroundColor: '#C0C0C0',
+    backgroundColor: '#FFFFFF',
     fontSize: 18,
     marginTop: 8,
   },
@@ -42,7 +42,7 @@ bottomContainer: {
 button: {
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: '#C0C0C0',
+  backgroundColor: '#FFFFFF',
   borderWidth: 4, 
   borderColor: 'white',
   color: 'white',

@@ -19,6 +19,20 @@ export default class LoginScreen extends React.Component {
   signUp() {
     Alert.alert('Test');
   }
+  static navigationOptions = {
+    title: "Swing",
+    headerLeft: null,
+    headerStyle: {
+      backgroundColor: "#feac00"
+    },
+    headerTitleStyle: {
+      fontFamily: 'Hoefler Text',
+      fontWeight: 'bold',
+      fontStyle: 'italic',
+      fontSize: 26,
+      color: '#e52b06'
+    },
+  };
   render() {
     return (
       <View style={styles.container}>
