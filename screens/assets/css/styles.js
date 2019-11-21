@@ -3,7 +3,7 @@ const styles = StyleSheet.create({
 
 container: {
     flex: 1,
-    backgroundColor: '#F9CB9C',
+    backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
   },

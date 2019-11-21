@@ -3,6 +3,7 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
+  Button,
   View,
   ScrollView,
   Animated,
@@ -161,8 +162,8 @@ export default class screens extends Component {
               opacity: interpolations[index].opacity,
             };
             return (
-              <MapView.Marker key={index} coordinate={marker.coordinate}>
-                <Animated.View style={[styles.markerWrap, opacityStyle]}>
+              <MapView.Marker key={index} coordinate={marker.coordinate} >
+                <Animated.View style={[styles.markerWrap, opacityStyle]} >
                   <Animated.View style={[styles.ring, scaleStyle]} />
                   <View style={styles.marker} />
                 </Animated.View>
@@ -191,19 +192,19 @@ export default class screens extends Component {
           contentContainerStyle={styles.endPadding}
         >
           {this.state.markers.map((marker, index) => (
-            <View style={styles.card} key={index}>
+            <TouchableOpacity style={styles.card} key={index}  onPress={() => this.props.navigation.navigate('Description')}>
               <Image
                 source={marker.image}
                 style={styles.cardImage}
                 resizeMode="cover"
               />
               <View style={styles.textContent}>
-                <Text numberOfLines={1} style={styles.cardtitle}>{marker.title}</Text>
+                <Text numberOfLines={1} style={styles.cardtitle}>{marker.title} </Text>
                 <Text numberOfLines={1} style={styles.cardDescription}>
                   {marker.description}
                 </Text>
               </View>
-            </View>
+            </TouchableOpacity>
           ))}
         </Animated.ScrollView>
       </View>
