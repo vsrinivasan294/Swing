@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { useState, Component } from "react";
+
 import {
   AppRegistry,
   StyleSheet,
@@ -13,7 +14,8 @@ import {
   TouchableOpacity,
   Navigator,
 } from "react-native";
-
+import { TabNavigator } from "react-navigation";
+import { Container} from "native-base";
 import MapView from "react-native-maps";
 import { SearchBar } from 'react-native-elements';
 
@@ -29,7 +31,24 @@ const { width, height } = Dimensions.get("window");
 const CARD_HEIGHT = height / 5;
 const CARD_WIDTH = CARD_HEIGHT + 100;
 
+
 export default class screens extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      coordinate: {
+        latitude: null,
+        longitude: null,
+        error:null,
+      },
+      touch: false,
+      touchLocation: {
+        latitude: null,
+        longitude: null,
+      }
+    };
+  }
+
   static navigationOptions = {
     title: "Swing",
     headerLeft: null,
@@ -44,7 +63,7 @@ export default class screens extends Component {
       color: '#e52b06'
     },
   };
-  state = {
+   information = {
     markers: [
       {
         coordinate: {
@@ -91,6 +110,8 @@ export default class screens extends Component {
     },
   };
 
+
+
   componentWillMount() {
     this.index = 0;
     this.animation = new Animated.Value(0);
@@ -100,23 +121,37 @@ export default class screens extends Component {
     // We should just debounce the event listener here
     this.animation.addListener(({ value }) => {
       let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
-      if (index >= this.state.markers.length) {
-        index = this.state.markers.length - 1;
+      if (index >= this.information.markers.length) {
+        index = this.information.markers.length - 1;
       }
       if (index <= 0) {
         index = 0;
       }
 
+      navigator.geolocation.getCurrentPosition(
+       (position) => {
+         console.log("wokeeey");
+         console.log(position);
+         this.setState({coordinate:{
+           latitude: position.coords.latitude,
+           longitude: position.coords.longitude,
+           error: null,
+         }});
+       },
+       (error) => this.setState({coordinate:{ error: error.message }}),
+       { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
+     );
+
       clearTimeout(this.regionTimeout);
       this.regionTimeout = setTimeout(() => {
         if (this.index !== index) {
           this.index = index;
-          const { coordinate } = this.state.markers[index];
+          const { coordinate } = this.information.markers[index];
           this.map.animateToRegion(
             {
               ...coordinate,
-              latitudeDelta: this.state.region.latitudeDelta,
-              longitudeDelta: this.state.region.longitudeDelta,
+              latitudeDelta: this.information.region.latitudeDelta,
+              longitudeDelta: this.information.region.longitudeDelta,
             },
             350
           );
@@ -125,8 +160,13 @@ export default class screens extends Component {
     });
   }
 
+
+
+
+
+
   render() {
-    const interpolations = this.state.markers.map((marker, index) => {
+    const interpolations = this.information.markers.map((marker, index) => {
       const inputRange = [
         (index - 1) * CARD_WIDTH,
         index * CARD_WIDTH,
@@ -151,15 +191,32 @@ export default class screens extends Component {
           ref='searchBar'
           placeholder='Find me'
           barStyle="black"
+          inputStyle={{paddingBottom: 10}}
           showsCancelButtonWhileEditing={false}
         />
       <View style={styles.container}>
         <MapView
           ref={map => this.map = map}
-          initialRegion={this.state.region}
+          initialRegion={this.information.region}
           style={styles.container}
+          showsUserLocation={true}
+          onPress={e => {
+            this.setState({touch:true});
+            this.setState({touchLocation: {
+              latitude:e.nativeEvent.coordinate.latitude,
+              longitude:e.nativeEvent.coordinate.longitude,
+            }});
+          }}
         >
-          {this.state.markers.map((marker, index) => {
+        {
+          this.state.touch &&
+          <MapView.Marker
+            key={1}
+            coordinate={this.state.touchLocation}
+            draggable
+          ></MapView.Marker>
+        }
+          {this.information.markers.map((marker, index) => {
             const scaleStyle = {
               transform: [
                 {
@@ -180,7 +237,9 @@ export default class screens extends Component {
             );
           })}
         </MapView>
-        
+
+
+
         <Animated.ScrollView
           horizontal
           scrollEventThrottle={1}
@@ -201,7 +260,8 @@ export default class screens extends Component {
           style={styles.scrollView}
           contentContainerStyle={styles.endPadding}
         >
-          {this.state.markers.map((marker, index) => (
+
+          {this.information.markers.map((marker, index) => (
             <TouchableOpacity style={styles.card} key={index}  onPress={() => this.props.navigation.navigate('Description')}>
               <Image
                 source={marker.image}
@@ -218,13 +278,34 @@ export default class screens extends Component {
           ))}
         </Animated.ScrollView>
 
-        
-      </View>    
-      <TouchableOpacity style= {styles.addButton} onPress = {() => this.props.navigation.navigate('Add')}>
-      <View>
-      <Image style={styles.addButton} source={require("./assets/images/add.png")}/>
+
       </View>
-</TouchableOpacity>
+      <TouchableOpacity style= {styles.markers} onPress = {() => this.props.navigation.navigate('Add')}>
+      <View>
+      <Image style={styles.addButton} source={require("./assets/images/add_red.png")}/>
+      </View>
+      </TouchableOpacity>
+
+<TouchableOpacity style={styles.location} onPress={_ => {
+    try {
+      if (this.state.coordinate.latitude) {
+        this.map.animateToRegion(
+          {
+            latitude: this.state.coordinate.latitude,
+            longitude: this.state.coordinate.longitude
+          },
+          1000
+        );
+      }
+    }
+    catch (error) {
+      console.log(error);
+    }
+}}>
+          <View style={styles.addButton}>
+            <Image source={require('./assets/images/orange_pin.png') }style={styles.locationButton}/>
+          </View>
+        </TouchableOpacity>
     </>
 
     );
@@ -233,10 +314,15 @@ export default class screens extends Component {
 
 const styles = StyleSheet.create({
   addButton: {
-    width:30,
-       height:30,
+    width:60,
+    height:60,
     borderRadius: 15,
 
+  },
+  locationButton: {
+    width:52,
+    height:52,
+    borderRadius: 15,
   },
   container: {
     flex: 1,
@@ -285,21 +371,52 @@ const styles = StyleSheet.create({
   markerWrap: {
     alignItems: "center",
     justifyContent: "center",
+    color: "#feac00",
   },
   marker: {
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: "rgba(130,4,150, 0.9)",
+    backgroundColor: "rgba(229,43, 6, 0.9)",
   },
   ring: {
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: "rgba(130,4,150, 0.3)",
+    backgroundColor: "rgba(229,43, 6, 0.3)",
     position: "absolute",
     borderWidth: 1,
-    borderColor: "rgba(130,4,150, 0.5)",
+    borderColor: "rgba(229,43, 6, 0.5)",
+  },
+  markers: {
+    resizeMode: 'cover',
+    position: 'absolute',
+    bottom: "30%",
+    left: 0,
+    paddingTop: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 15,
+    paddingRight: 30,
+    paddingBottom: 15
+  },
+  location: {
+    position: 'absolute',
+    top: '45%',
+    left: 0,
+    paddingTop: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 15,
+    paddingRight: 40,
+    paddingBottom: 15
+  },
+  lock: {
+    position: 'absolute',
+    top: '50%',
+    left:10,
+    paddingHorizontal: 10,
+    paddingVertical: 15,
+    paddingRight: 20,
+    paddingBottom: 15
   },
 });
 

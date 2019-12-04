@@ -28,8 +28,8 @@ const RootStack = createStackNavigator(
     Camera: CameraScreen,
     Starting: StartingScreen,
     Browse: BrowseScreen,
-    Upload: UploadScreen, 
-    ByLocation: ByLocationScreen, 
+    Upload: UploadScreen,
+    ByLocation: ByLocationScreen,
     BySpot: BySpotScreen,
     Image: ImageScreen,
     Description: DescriptionScreen,
@@ -38,7 +38,7 @@ const RootStack = createStackNavigator(
     //Test: TestScreen,
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'ByLocation',
   }
 );
 
