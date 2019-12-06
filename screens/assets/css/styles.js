@@ -5,21 +5,20 @@ container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
     alignItems: 'center',
-    justifyContent: 'center',
   },
 h1: {
     color: 'white',
     fontSize: 60,
   },
 h2: {
-    color: '#828282',
+    color: 'white',
     fontSize: 18,
     justifyContent: 'center',
     textAlign: 'center',
   },
 h3: {
-  color: 'black',
-  fontSize: 36,
+  color: 'white',
+  fontSize: 22,
   justifyContent: 'center',
   textAlign: 'center',
 },
@@ -43,10 +42,11 @@ middleContainer: {
   flex: 3,
   justifyContent: 'flex-start',
   alignItems: 'center',
+  backgroundColor: '#feac00',
 },
 bottomContainer: {
   justifyContent: 'flex-end',
-  width: '90%',
+  width: '100%',
   margin: 20,
   padding: 10,
 }, 
@@ -56,10 +56,9 @@ button: {
   backgroundColor: '#F9CB9C',
   borderWidth: 3, 
   borderColor: 'white'
-
 }, 
 input: {
-    width: 200,
+    width: 250,
     height: 44,
     padding: 10,
     marginLeft: 40,
@@ -67,7 +66,48 @@ input: {
     borderWidth: 1,
     borderColor: 'black',
     marginBottom: 10,
-  }
+  },
+background: {
+  flex: 1,
+  backgroundColor: '#feac00',
+},
+headerTitleStyle: {
+  fontFamily: 'Hoefler Text',
+  fontWeight: 'bold',
+  fontStyle: 'italic',
+  fontSize: 60,
+  color: '#e52b06'
+},
+buttonContainerTop: {
+    height: 80,
+    backgroundColor: "#fe0055",
+    justifyContent: 'center',
+    alignItems: 'center',
+},
+buttonContainerBottom: {
+    height: 80,
+    backgroundColor: "#ab044f",
+    justifyContent: 'center',
+    alignItems: 'center',
+},
+logInButton: {
+    height: 50,
+    width: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: "#e52b06",
+    padding: 15,
+    marginTop: 30,
+    borderRadius:30,
+},
+title: {
+  color: '#121212',
+  fontSize: 24,
+  justifyContent: 'center',
+  textAlign: 'center',
+  marginBottom: 40,
+  marginTop: 80,
+}
 });
 
 export default styles

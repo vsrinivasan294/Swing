@@ -1,10 +1,23 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Button, Navigator, TextInput, Alert } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, Navigator, TextInput, Alert, TouchableHighlight} from 'react-native';
 import logo from './assets/images/logo.jpg';
 import styles from './assets/css/styles';
 
 
 export default class SignUpScreen extends React.Component {
+  static navigationOptions = {
+    title: "Swing",
+    headerStyle: {
+      backgroundColor: "#feac00"
+    },
+    headerTitleStyle: {
+      fontFamily: 'Hoefler Text',
+      fontWeight: 'bold',
+      fontStyle: 'italic',
+      fontSize: 26,
+      color: '#e52b06'
+    },
+  };
   constructor(props) {
     super(props);
     
@@ -24,6 +37,8 @@ export default class SignUpScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <Text style={styles.title}>{"Sign Up"}
+        </Text>
         <TextInput
           value={this.state.username}
           onChangeText={(username) => this.setState({ username })}
@@ -62,9 +77,9 @@ export default class SignUpScreen extends React.Component {
           placeholder={'Location'}
           style={styles.input}
         />
-        
-        <Text style={styles.h2} onPress={this.signUp.bind(this)}> Signup </Text>
-
+        <TouchableHighlight onPress={this.signUp.bind(this)} style={styles.logInButton}>
+          <Text style={styles.h2}>Sign Up</Text>
+        </TouchableHighlight>
       </View>
     );
   }
