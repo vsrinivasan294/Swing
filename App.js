@@ -16,7 +16,8 @@ import BySpotScreen from './screens/BySpotScreen';
 import ImageScreen from './screens/ImageScreen';
 import DescriptionScreen from './screens/DescriptionScreen'
 import HeaderScreen from './screens/HeaderScreen';
-import AddNameScreen from './screens/AddNameScreen'
+import AddNameScreen from './screens/AddNameScreen';
+import AddScreenMap from './screens/AddScreenMap';
 //import TestScreen from './screens/TestScreen';
 
 
@@ -35,6 +36,7 @@ const RootStack = createStackNavigator(
     Description: DescriptionScreen,
     HeaderScreen: HeaderScreen,
     Add: AddNameScreen,
+    AddMap: AddScreenMap,
     //Test: TestScreen,
   },
   {

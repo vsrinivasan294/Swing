@@ -19,59 +19,19 @@ import { Container} from "native-base";
 import MapView from "react-native-maps";
 import { SearchBar } from 'react-native-elements';
 
+
 const Images = [
   { uri: "https://i.imgur.com/iwyuxOR.jpg" },
   { uri: "https://i.imgur.com/aUeBiR8.jpg" },
   { uri: "https://i.imgur.com/4qm8LWE.jpg" },
-  { uri: "https://i.imgur.com/ONXUBdS.jpg" }
+  { uri: "https://i.imgur.com/TJzHJcZ.jpg" }
 ]
-
 const { width, height } = Dimensions.get("window");
-
 const CARD_HEIGHT = height / 5;
 const CARD_WIDTH = CARD_HEIGHT + 100;
 
-var test = [
-  {
-    coordinate: {
-      latitude: 45.524548,
-      longitude: -122.6749817,
-    },
-    title: "Hammock Beach",
-    description: "This is the best Hammock on the beach",
-    image: Images[0],
-  },
-  {
-    coordinate: {
-      latitude: 45.524698,
-      longitude: -122.6655507,
-    },
-    title: "Hammock Mountain",
-    description: "This is the best Hammock on the mountain",
-    image: Images[1],
-  },
-  {
-    coordinate: {
-      latitude: 45.524548,
-      longitude: -122.6749817,
-    },
-    title: "Relax and Hammock",
-    description: "This is the best Hammock ever",
-    image: Images[2],
-  },
-  {
-    coordinate: {
-      latitude: 45.521016,
-      longitude: -122.6561917,
-    },
-    title: "Hammock Nature",
-    description: "This is the best Hammock in nature",
-    image: Images[3],
-  },
-];
 
 export default class screens extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -84,14 +44,12 @@ export default class screens extends Component {
       touchLocation: {
         latitude: null,
         longitude: null,
-      },
+      }
     };
   }
 
-
   static navigationOptions = {
     title: "Swing",
-    headerLeft: null,
     headerStyle: {
       backgroundColor: "#feac00"
     },
@@ -104,6 +62,44 @@ export default class screens extends Component {
     },
   };
    information = {
+    markers: [
+      {
+        coordinate: {
+          latitude: 45.524548,
+          longitude: -122.6749817,
+        },
+        title: "Hammock Beach",
+        description: "This is the best Hammock on the beach",
+        image: Images[0],
+      },
+      {
+        coordinate: {
+          latitude: 45.524698,
+          longitude: -122.6655507,
+        },
+        title: "Hammock Mountain",
+        description: "This is the best Hammock on the mountain",
+        image: Images[1],
+      },
+      {
+        coordinate: {
+          latitude: 45.5230786,
+          longitude: -122.6701034,
+        },
+        title: "Hammock Forest",
+        description: "This is the best Hammock on the forest",
+        image: Images[2],
+      },
+      {
+        coordinate: {
+          latitude: 45.521016,
+          longitude: -122.6561917,
+        },
+        title: "Hammock Nature",
+        description: "This is the best Hammock in nature",
+        image: Images[3],
+      },
+    ],
     region: {
       latitude: 45.52220671242907,
       longitude: -122.6653281029795,
@@ -113,18 +109,18 @@ export default class screens extends Component {
   };
 
 
+
   componentWillMount() {
     this.index = 0;
     this.animation = new Animated.Value(0);
   }
-
   componentDidMount() {
     // We should detect when scrolling has stopped then animate
     // We should just debounce the event listener here
     this.animation.addListener(({ value }) => {
       let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
-      if (index >= test.length) {
-        index = test.length - 1;
+      if (index >= this.information.markers.length) {
+        index = this.information.markers.length - 1;
       }
       if (index <= 0) {
         index = 0;
@@ -137,7 +133,6 @@ export default class screens extends Component {
            longitude: position.coords.longitude,
            error: null,
          }});
-
        },
        (error) => this.setState({coordinate:{ error: error.message }}),
        { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
@@ -147,7 +142,7 @@ export default class screens extends Component {
       this.regionTimeout = setTimeout(() => {
         if (this.index !== index) {
           this.index = index;
-          const { coordinate } = test[index];
+          const { coordinate } = this.information.markers[index];
           this.map.animateToRegion(
             {
               ...coordinate,
@@ -161,8 +156,13 @@ export default class screens extends Component {
     });
   }
 
+
+
+
+
+
   render() {
-    const interpolations = test.map((marker, index) => {
+    const interpolations = this.information.markers.map((marker, index) => {
       const inputRange = [
         (index - 1) * CARD_WIDTH,
         index * CARD_WIDTH,
@@ -180,21 +180,6 @@ export default class screens extends Component {
       });
       return { scale, opacity };
     });
-
-    try {
-      const name = this.props.navigation.state.params.name;
-      const capacity = this.props.navigation.state.params.capacity;
-      const description = this.props.navigation.state.params.description;
-      const location = this.props.navigation.state.params.location;
-      const image = this.props.navigation.state.params.image;
-      test = [test[0], test[1], test[2], {title:name, description:description, coordinate:location, image:test[3].image}];
-      console.log(test);
-    }
-    catch (error) {
-      console.log(error);
-    }
-
-
 
     return (
       <>
@@ -219,84 +204,31 @@ export default class screens extends Component {
             }});
           }}
         >
-
-          {test.map((marker, index) => {
-            const scaleStyle = {
-              transform: [
-                {
-                  scale: interpolations[index].scale,
-                },
-              ],
-            };
-            const opacityStyle = {
-              opacity: interpolations[index].opacity,
-            };
-            return (
-              <MapView.Marker key={index} coordinate={marker.coordinate} >
-                <Animated.View style={[styles.markerWrap, opacityStyle]} >
-                  <Animated.View style={[styles.ring, scaleStyle]} />
-                  <View style={styles.marker} />
-                </Animated.View>
-              </MapView.Marker>
-            );
-          })}
-
+        {
+          this.state.touch &&
+          <MapView.Marker
+            key={1}
+            coordinate={this.state.touchLocation}
+            draggable
+          ></MapView.Marker>
+        }
 
         </MapView>
 
 
-
-        <Animated.ScrollView
-          horizontal
-          scrollEventThrottle={1}
-          showsHorizontalScrollIndicator={false}
-          snapToInterval={CARD_WIDTH}
-          onScroll={Animated.event(
-            [
-              {
-                nativeEvent: {
-                  contentOffset: {
-                    x: this.animation,
-                  },
-                },
-              },
-            ],
-            { useNativeDriver: true }
-          )}
-          style={styles.scrollView}
-          contentContainerStyle={styles.endPadding}
-        >
-
-          {test.map((marker, index) => (
-            <TouchableOpacity style={styles.card} key={index}  onPress={() => this.props.navigation.navigate('Description')}>
-              <Image
-                source={marker.image}
-                style={styles.cardImage}
-                resizeMode="cover"
-              />
-              <View style={styles.textContent}>
-                <Text numberOfLines={1} style={styles.cardtitle}>{marker.title} </Text>
-                <Text numberOfLines={1} style={styles.cardDescription}>
-                  {marker.description}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          ))}
-              </Animated.ScrollView>
-
-
       </View>
-      <TouchableOpacity style= {styles.markers} onPress ={_ => {
 
-          this.props.navigation.navigate('AddMap');
-
-      }}>
-      <View>
-      <Image style={styles.addButton} source={require("./assets/images/add_red.png")}/>
-      </View>
-      </TouchableOpacity>
+      {
+          this.state.touch &&
+        <TouchableOpacity style={styles.SubmitButtonStyle} key={1}  onPress={e => {this.props.navigation.navigate('Add', {point: this.state.touchLocation})} }>
+          <View style={styles.textContent}>
+            <Text numberOfLines={1} style={styles.buttonText}> Add Hammock Spot! </Text>
+          </View>
+        </TouchableOpacity>
+      }
 
 <TouchableOpacity style={styles.location} onPress={_ => {
+  this.state.touch = false
     try {
       if (this.state.coordinate.latitude) {
         this.map.animateToRegion(
@@ -345,19 +277,19 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   endPadding: {
-    paddingRight: width - CARD_WIDTH,
+    paddingRight: 50,
   },
   card: {
     padding: 10,
-    elevation: 2,
+    elevation: 1,
     backgroundColor: "#FFF",
     marginHorizontal: 10,
     shadowColor: "#000",
     shadowRadius: 5,
     shadowOpacity: 0.3,
     shadowOffset: { x: 2, y: -2 },
-    height: CARD_HEIGHT,
-    width: CARD_WIDTH,
+    height: 50,
+    width: 50,
     overflow: "hidden",
   },
   cardImage: {
@@ -411,7 +343,7 @@ const styles = StyleSheet.create({
   },
   location: {
     position: 'absolute',
-    top: '45%',
+    bottom: '25%',
     left: 0,
     paddingTop: 5,
     paddingHorizontal: 10,
@@ -428,6 +360,24 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     paddingBottom: 15
   },
+  SubmitButtonStyle: {
+    position: 'absolute',
+    bottom: "5%",
+    left: "25%",
+    marginTop:10,
+    paddingTop:15,
+    paddingBottom:15,
+    marginLeft:30,
+    marginRight:30,
+    backgroundColor:'#e60000',
+    borderRadius:10,
+    borderWidth: 1,
+    borderColor: '#fff'
+  },
+  buttonText: {
+    color: "#ffffff"
+  }
+
 });
 
 AppRegistry.registerComponent("mapfocus", () => screens);

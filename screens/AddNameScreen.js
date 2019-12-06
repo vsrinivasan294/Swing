@@ -4,6 +4,16 @@ import logo from './assets/images/logo.jpg';
 
 
 export default class AddNameScreen extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: null,
+      capacity: null,
+      description: null,
+  };
+  }
+
   static navigationOptions = {
     title: "Swing",
     headerStyle: {
@@ -18,30 +28,31 @@ export default class AddNameScreen extends React.Component {
     },
   };
   render() {
+    const loc = this.props.navigation.state.params.point;
 
-    const Images = [
-        { uri: "https://i.imgur.com/iwyuxOR.jpg" },
-        { uri: "https://i.imgur.com/aUeBiR8.jpg" },
-        { uri: "https://i.imgur.com/4qm8LWE.jpg" },
-        { uri: "https://i.imgur.com/TJzHJcZ.jpg" }
-      ]
-
-    const title =  "Hammock Beach";
-    const description =  "This is the best Hammock on the beach";
     return (
     <View style={styles.textContent}>
         <Text numberOfLines={1} style={styles.Destitle}>{"Add the Info"}</Text>
           <Text numberOfLines={1} style={styles.Des}>{"Name"} </Text>
-          <TextInput style={styles.input}>
+          <TextInput style={styles.input} onChangeText={(text) => this.setState({name:text})}
+          value={this.state.name}>
         </TextInput>
         <Text numberOfLines={1} style={styles.Des}>{"Hammocking Capacity"} </Text>
-        <TextInput style={styles.input}>
+        <TextInput style={styles.input} onChangeText={(text) => this.setState({capacity:text})}
+        value={this.state.capacity}>
         </TextInput>
         <Text numberOfLines={1} style={styles.Des}>{"Description"} </Text>
-        <TextInput style={styles.input}>
+        <TextInput style={styles.input} onChangeText={(text) => this.setState({description:text})}
+        value={this.state.description}>
         </TextInput>
-         <Button title="Add Photo"></Button>
-      </View> 
+         <Button title="Add Photo" onPress={e => {}}></Button>
+          <Button title="Add" onPress={e => {this.props.navigation.navigate('ByLocation', {
+            name:this.state.name,
+            capacity:this.state.capacity,
+            description:this.state.description,
+            location:loc,
+            image: "./assets/images/orange_pin.png"})}}></Button>
+      </View>
     );
   }
 }
@@ -55,21 +66,21 @@ Destitle: {
   marginLeft: 10,
   marginRight: 10,
   textAlign: "center",
-  fontFamily: "Arial", 
+  fontFamily: "Arial",
 },
 Image: {
   marginTop: 20,
   height: 300,
   width: 300,
   alignItems: 'center',
-  justifyContent: 'center', 
+  justifyContent: 'center',
 },
 Desbold: {
   fontSize: 20,
   marginTop: 30,
   marginLeft: 40,
   marginRight: 40,
-  fontFamily: "Arial", 
+  fontFamily: "Arial",
   fontWeight: 'bold',
 },
 Des: {
@@ -77,7 +88,7 @@ Des: {
   marginTop: 30,
   marginLeft: 40,
   marginRight: 40,
-  fontFamily: "Arial", 
+  fontFamily: "Arial",
 },
 input: {
     width: 200,
