@@ -38,7 +38,7 @@ const RootStack = createStackNavigator(
     //Test: TestScreen,
   },
   {
-    initialRouteName: 'ByLocation',
+    initialRouteName: 'Home',
   }
 );
 

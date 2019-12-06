@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Button, Navigator, TextInput, Alert } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, Navigator, TextInput, Alert, TouchableHighlight } from 'react-native';
 import * as Expo from 'expo';
 import logo from './assets/images/logo.jpg';
 import styles from './assets/css/styles';
@@ -21,7 +21,6 @@ export default class LoginScreen extends React.Component {
   }
   static navigationOptions = {
     title: "Swing",
-    headerLeft: null,
     headerStyle: {
       backgroundColor: "#feac00"
     },
@@ -36,6 +35,8 @@ export default class LoginScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <Text style={styles.title}>{"Log In"}
+        </Text>
         <TextInput
           value={this.state.username}
           onChangeText={(username) => this.setState({ username })}
@@ -49,8 +50,9 @@ export default class LoginScreen extends React.Component {
           secureTextEntry={true}
           style={styles.input}
         />
-        <Text style={styles.h2} onPress={() => this.props.navigation.navigate('Starting')}> Login </Text>
-        
+        <TouchableHighlight onPress={() => this.props.navigation.navigate('ByLocation')} style={styles.logInButton}>
+          <Text style={styles.h2}>Log In</Text>
+        </TouchableHighlight>
 
       </View>
     );

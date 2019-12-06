@@ -49,21 +49,32 @@ export default class screens extends Component {
     };
   }
 
-  static navigationOptions = {
-    title: "Swing",
-    headerLeft: null,
-    headerStyle: {
-      backgroundColor: "#feac00"
-    },
-    headerTitleStyle: {
-      fontFamily: 'Hoefler Text',
-      fontWeight: 'bold',
-      fontStyle: 'italic',
-      fontSize: 26,
-      color: '#e52b06'
-    },
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Swing',
+      headerRight: (
+          <Button 
+              title='Log Out' 
+              onPress={ () => navigation.navigate('Home') }                
+              backgroundColor= "rgba(0,0,0,0)"
+              color="#fff"
+          />
+      ), 
+      headerLeft: null,
+      headerStyle: {
+        backgroundColor: "#feac00"
+      },
+      headerTitleStyle: {
+        fontFamily: 'Hoefler Text',
+        fontWeight: 'bold',
+        fontStyle: 'italic',
+        fontSize: 26,
+        color: '#e52b06'
+      },
+    }
   };
-   information = {
+
+  information = {
     markers: [
       {
         coordinate: {
