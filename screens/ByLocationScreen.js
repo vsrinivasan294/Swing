@@ -190,7 +190,7 @@ export default class screens extends Component {
 
       }
       else {
-        test = [...test, {title:name, description:description, coordinate:location, image:Images[4]}];
+        test = [...test, {title:name, description:description, coordinate:location, capacity:capacity, image:Images[4]}];
         map_idx[name] = "here"
       }
     }
