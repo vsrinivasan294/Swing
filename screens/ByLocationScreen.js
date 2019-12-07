@@ -98,7 +98,8 @@ export default class screens extends Component {
         capacity: null,
         description: null,
         image: null,
-      }
+      },
+      search: ''
     };
   }
 
@@ -179,6 +180,13 @@ export default class screens extends Component {
     });
   }
 
+  updateSearch = s => {
+    this.setState({
+      search: s
+    });
+  }
+
+
   render() {
     try {
       const name = this.props.navigation.state.params.name;
@@ -217,6 +225,8 @@ export default class screens extends Component {
       return { scale, opacity };
     });
 
+    const {search} = this.state.search;
+
     return (
       <>
       <SearchBar
@@ -225,6 +235,8 @@ export default class screens extends Component {
           barStyle="black"
           inputStyle={{paddingBottom: 10}}
           showsCancelButtonWhileEditing={false}
+          onChangeText={this.updateSearch}
+          value={search}
         />
       <View style={styles.container}>
         <MapView
