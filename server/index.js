@@ -14,7 +14,8 @@ const Storage = multer.diskStorage({
   },
 })
 
-const upload = multer({ storage: Storage })
+const upload = multer({ storage: Storage });
+
 
 app.get('/', (req, res) => {
   res.status(200).send('You can post to /api/upload.')

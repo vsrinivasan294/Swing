@@ -29,11 +29,10 @@ const Images = [
 ]
 
 const { width, height } = Dimensions.get("window");
-const geolib = require('geolib');
-import { getDistance } from 'geolib';
 
 const CARD_HEIGHT = height / 5;
 const CARD_WIDTH = CARD_HEIGHT + 100;
+console.disableYellowBox = true;
 
 var test = [
   {
@@ -157,6 +156,14 @@ export default class screens extends Component {
    );
   }
 
+  animate(){
+    console.log("alsdjkf");
+      let r = {
+        latitude: 45.52220671242907,
+        longitude: -122.6653281029795,
+      };
+      this.map.animateToRegion(r, 365);
+  }
 
   componentWillMount() {
     this.index = 0;
@@ -363,12 +370,18 @@ export default class screens extends Component {
 
       </View>
       <TouchableOpacity style= {styles.markers} onPress ={_ => {
-
           this.props.navigation.navigate('AddMap');
-
       }}>
       <View>
       <Image style={styles.addButton} source={require("./assets/images/add_red.png")}/>
+      </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity style= {styles.search} onPress ={_ => {
+        this.animate();
+      }}>
+      <View>
+      <Image style={styles.addButton} source={require("./assets/images/search.png")}/>
       </View>
       </TouchableOpacity>
 
@@ -400,9 +413,10 @@ export default class screens extends Component {
 
 const styles = StyleSheet.create({
   addButton: {
-    width:60,
-    height:60,
+    width:50,
+    height:50,
     borderRadius: 15,
+    paddingTop: 5,
 
   },
   locationButton: {
@@ -504,6 +518,11 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     paddingBottom: 15
   },
+  search: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+  }
 });
 
 AppRegistry.registerComponent("mapfocus", () => screens);
