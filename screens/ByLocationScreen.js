@@ -13,7 +13,7 @@ import {
   Dimensions,
   TouchableOpacity,
   Navigator,
-  geolib
+
 } from "react-native";
 import { TabNavigator } from "react-navigation";
 import { Container} from "native-base";
@@ -29,6 +29,8 @@ const Images = [
 ]
 
 const { width, height } = Dimensions.get("window");
+const geolib = require('geolib');
+import { getDistance } from 'geolib';
 
 const CARD_HEIGHT = height / 5;
 const CARD_WIDTH = CARD_HEIGHT + 100;
@@ -51,7 +53,7 @@ var test = [
     },
     title: "Hammock Mountain",
     description: "This is the best Hammock on the mountain",
-    capacity: 2, 
+    capacity: 2,
     image: Images[1],
   },
   {
@@ -103,19 +105,29 @@ export default class screens extends Component {
   }
 
 
-  static navigationOptions = {
-    title: "Swing",
-    headerLeft: null,
-    headerStyle: {
-      backgroundColor: "#feac00"
-    },
-    headerTitleStyle: {
-      fontFamily: 'Hoefler Text',
-      fontWeight: 'bold',
-      fontStyle: 'italic',
-      fontSize: 26,
-      color: '#e52b06'
-    },
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Swing',
+      headerRight: (
+          <Button
+              title='Log Out'
+              onPress={ () => navigation.navigate('Home') }
+              backgroundColor= "rgba(0,0,0,0)"
+              color="#fff"
+          />
+      ),
+      headerLeft: null,
+      headerStyle: {
+        backgroundColor: "#feac00"
+      },
+      headerTitleStyle: {
+        fontFamily: 'Hoefler Text',
+        fontWeight: 'bold',
+        fontStyle: 'italic',
+        fontSize: 26,
+        color: '#e52b06'
+      },
+    }
   };
    information = {
     region: {
@@ -289,11 +301,24 @@ export default class screens extends Component {
         >
 
           {test.map((marker, index) => (
-            <TouchableOpacity style={styles.card} key={index}  onPress={() => this.props.navigation.navigate('Description', {
-            name:marker.title,
-            capacity:marker.capacity,
-            description:marker.description,
-            image: marker.image})}>
+            <TouchableOpacity style={styles.card} key={index}  onPress={() => {
+                const lat1 = this.state.coordinate.latitude;
+                const lon1 = this.state.coordinate.longitude;
+                const lon2 = marker.coordinate.longitude;
+                const lat2 = marker.coordinate.latitude;
+                const mlat1 = ((lat1*3.14)/180)*55.051;
+                const mlon1 = ((lon1*3.14)/180)*55.051;
+                const mlat2 = ((lat2*3.14)/180)*55.051;
+                const mlon2 = ((lon2*3.14)/180)*55.051;
+                const dist = parseInt(Math.sqrt(Math.pow(mlat1 - mlat2, 2) + Math.pow(mlon1 - mlon2, 2))) + 1
+
+              this.props.navigation.navigate('Description', {
+                  name:marker.title,
+                  capacity:marker.capacity,
+                  distance:dist,
+                  description:marker.description,
+                  image: marker.image})
+              }}>
               <Image
                 source={marker.image}
                 style={styles.cardImage}
