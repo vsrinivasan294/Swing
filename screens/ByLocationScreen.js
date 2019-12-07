@@ -100,7 +100,11 @@ export default class screens extends Component {
         capacity: null,
         description: null,
         image: null,
-      }
+      },
+      search: '',
+      loading: false,
+      data: [],
+      error: null
     };
   }
 
@@ -191,6 +195,13 @@ export default class screens extends Component {
     });
   }
 
+  updateSearch = s => {
+    this.setState({
+      search: s
+    });
+  }
+
+
   render() {
     try {
       const name = this.props.navigation.state.params.name;
@@ -229,14 +240,29 @@ export default class screens extends Component {
       return { scale, opacity };
     });
 
+    const {search} = this.state.search;
+    let titles = [];
+    for (const t in test) {
+      titles.push(test[t].title);
+    }
+    // for (const tit in titles) {
+      // console.log;
+      // if (test[t].title.includes(search)) {
+      //   console.log(test[t].title);
+      //   console.log(search);
+      // }
+    // }
+
     return (
       <>
       <SearchBar
           ref='searchBar'
-          placeholder='Find me'
+          placeholder='Find Spots'
           barStyle="black"
           inputStyle={{paddingBottom: 10}}
           showsCancelButtonWhileEditing={false}
+          onChangeText={this.updateSearch}
+          value={search}
         />
       <View style={styles.container}>
         <MapView

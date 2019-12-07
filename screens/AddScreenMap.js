@@ -186,13 +186,6 @@ export default class screens extends Component {
 
     return (
       <>
-      <SearchBar
-          ref='searchBar'
-          placeholder='Find me'
-          barStyle="black"
-          inputStyle={{paddingBottom: 10}}
-          showsCancelButtonWhileEditing={false}
-        />
       <View style={styles.container}>
         <MapView
           ref={map => this.map = map}
