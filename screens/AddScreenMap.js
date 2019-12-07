@@ -108,6 +108,21 @@ export default class screens extends Component {
     },
   };
 
+  componentWillUpdate() {
+    navigator.geolocation.getCurrentPosition(
+     (position) => {
+       this.setState({coordinate:{
+         latitude: position.coords.latitude,
+         longitude: position.coords.longitude,
+         error: null,
+       }});
+
+     },
+     (error) => this.setState({coordinate:{ error: error.message }}),
+     { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
+   );
+  }
+
 
 
   componentWillMount() {
@@ -125,18 +140,6 @@ export default class screens extends Component {
       if (index <= 0) {
         index = 0;
       }
-
-      navigator.geolocation.getCurrentPosition(
-       (position) => {
-         this.setState({coordinate:{
-           latitude: position.coords.latitude,
-           longitude: position.coords.longitude,
-           error: null,
-         }});
-       },
-       (error) => this.setState({coordinate:{ error: error.message }}),
-       { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
-     );
 
       clearTimeout(this.regionTimeout);
       this.regionTimeout = setTimeout(() => {

@@ -24,7 +24,8 @@ const Images = [
   { uri: "https://i.imgur.com/iwyuxOR.jpg" },
   { uri: "https://i.imgur.com/aUeBiR8.jpg" },
   { uri: "https://i.imgur.com/4qm8LWE.jpg" },
-  { uri: "https://i.imgur.com/ONXUBdS.jpg" }
+  { uri: "https://i.imgur.com/ONXUBdS.jpg" },
+  { uri: "https://i.imgur.com/7Xq0tJs.jpg" },
 ]
 
 const { width, height } = Dimensions.get("window");
@@ -75,6 +76,8 @@ var test = [
   },
 ];
 
+var map_idx = {}
+
 export default class screens extends Component {
 
   constructor(props) {
@@ -123,6 +126,21 @@ export default class screens extends Component {
     },
   };
 
+  componentWillUpdate() {
+    navigator.geolocation.getCurrentPosition(
+     (position) => {
+       this.setState({coordinate:{
+         latitude: position.coords.latitude,
+         longitude: position.coords.longitude,
+         error: null,
+       }});
+
+     },
+     (error) => this.setState({coordinate:{ error: error.message }}),
+     { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
+   );
+  }
+
 
   componentWillMount() {
     this.index = 0;
@@ -141,18 +159,7 @@ export default class screens extends Component {
         index = 0;
       }
 
-      navigator.geolocation.getCurrentPosition(
-       (position) => {
-         this.setState({coordinate:{
-           latitude: position.coords.latitude,
-           longitude: position.coords.longitude,
-           error: null,
-         }});
 
-       },
-       (error) => this.setState({coordinate:{ error: error.message }}),
-       { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
-     );
 
       clearTimeout(this.regionTimeout);
       this.regionTimeout = setTimeout(() => {
@@ -173,7 +180,24 @@ export default class screens extends Component {
   }
 
   render() {
-    var geolib = require('geolib');
+    try {
+      const name = this.props.navigation.state.params.name;
+      const capacity = this.props.navigation.state.params.capacity;
+      const description = this.props.navigation.state.params.description;
+      const location = this.props.navigation.state.params.location;
+      const image = this.props.navigation.state.params.image;
+      if (name in map_idx) {
+
+      }
+      else {
+        test = [...test, {title:name, description:description, coordinate:location, image:Images[4]}];
+        map_idx[name] = "here"
+      }
+    }
+    catch (error) {
+      console.log(error);
+    }
+
     const interpolations = test.map((marker, index) => {
       const inputRange = [
         (index - 1) * CARD_WIDTH,
@@ -192,21 +216,6 @@ export default class screens extends Component {
       });
       return { scale, opacity };
     });
-
-    try {
-      const name = this.props.navigation.state.params.name;
-      const capacity = this.props.navigation.state.params.capacity;
-      const description = this.props.navigation.state.params.description;
-      const location = this.props.navigation.state.params.location;
-      const image = this.props.navigation.state.params.image;
-      test = [test[0], test[1], test[2], {title:name, description:description, coordinate:location, capacity:capacity, image:test[3].image}];
-      console.log(test);
-    }
-    catch (error) {
-      console.log(error);
-    }
-
-
 
     return (
       <>
