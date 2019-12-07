@@ -1,3 +1,5 @@
+console.disableYellowBox = true;
+
 import React, { useState, Component } from "react";
 
 import {
@@ -13,7 +15,6 @@ import {
   Dimensions,
   TouchableOpacity,
   Navigator,
-
 } from "react-native";
 import { TabNavigator } from "react-navigation";
 import { Container} from "native-base";
@@ -29,8 +30,6 @@ const Images = [
 ]
 
 const { width, height } = Dimensions.get("window");
-const geolib = require('geolib');
-import { getDistance } from 'geolib';
 
 const CARD_HEIGHT = height / 5;
 const CARD_WIDTH = CARD_HEIGHT + 100;
