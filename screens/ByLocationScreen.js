@@ -414,10 +414,8 @@ export default class screens extends Component {
 
 const styles = StyleSheet.create({
   addButton2: {
-    width:50,
-    height:50,
-    width:45,
-    height:45,
+    width:60,
+    height:60,
     borderRadius: 15,
     paddingTop: 5,
 
