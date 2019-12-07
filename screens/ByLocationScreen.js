@@ -99,10 +99,12 @@ export default class screens extends Component {
         description: null,
         image: null,
       },
-      search: ''
+      search: '',
+      loading: false,
+      data: [],
+      error: null
     };
   }
-
 
   static navigationOptions = {
     title: "Swing",
@@ -226,12 +228,23 @@ export default class screens extends Component {
     });
 
     const {search} = this.state.search;
+    let titles = [];
+    for (const t in test) {
+      titles.push(test[t].title);
+    }
+    // for (const tit in titles) {
+      // console.log;
+      // if (test[t].title.includes(search)) {
+      //   console.log(test[t].title);
+      //   console.log(search);
+      // }
+    // }
 
     return (
       <>
       <SearchBar
           ref='searchBar'
-          placeholder='Find me'
+          placeholder='Find Spots'
           barStyle="black"
           inputStyle={{paddingBottom: 10}}
           showsCancelButtonWhileEditing={false}
