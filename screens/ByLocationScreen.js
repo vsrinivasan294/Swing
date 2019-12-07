@@ -374,7 +374,7 @@ export default class screens extends Component {
           this.props.navigation.navigate('AddMap');
       }}>
       <View>
-      <Image style={styles.addButton} source={require("./assets/images/add_red.png")}/>
+      <Image style={styles.addButton2} source={require("./assets/images/add_red.png")}/>
       </View>
       </TouchableOpacity>
 
@@ -413,6 +413,15 @@ export default class screens extends Component {
 }
 
 const styles = StyleSheet.create({
+  addButton2: {
+    width:50,
+    height:50,
+    width:45,
+    height:45,
+    borderRadius: 15,
+    paddingTop: 5,
+
+  },
   addButton: {
     width:45,
     height:45,
