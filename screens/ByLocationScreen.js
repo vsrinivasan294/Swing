@@ -13,6 +13,7 @@ import {
   Dimensions,
   TouchableOpacity,
   Navigator,
+  geolib
 } from "react-native";
 import { TabNavigator } from "react-navigation";
 import { Container} from "native-base";
@@ -39,6 +40,7 @@ var test = [
     },
     title: "Hammock Beach",
     description: "This is the best Hammock on the beach",
+    capacity: 4,
     image: Images[0],
   },
   {
@@ -48,6 +50,7 @@ var test = [
     },
     title: "Hammock Mountain",
     description: "This is the best Hammock on the mountain",
+    capacity: 2, 
     image: Images[1],
   },
   {
@@ -57,6 +60,7 @@ var test = [
     },
     title: "Relax and Hammock",
     description: "This is the best Hammock ever",
+    capacity: 2,
     image: Images[2],
   },
   {
@@ -66,6 +70,7 @@ var test = [
     },
     title: "Hammock Nature",
     description: "This is the best Hammock in nature",
+    capacity: 1,
     image: Images[3],
   },
 ];
@@ -85,6 +90,12 @@ export default class screens extends Component {
         latitude: null,
         longitude: null,
       },
+      selected: {
+        name: null,
+        capacity: null,
+        description: null,
+        image: null,
+      }
     };
   }
 
@@ -162,6 +173,7 @@ export default class screens extends Component {
   }
 
   render() {
+    var geolib = require('geolib');
     const interpolations = test.map((marker, index) => {
       const inputRange = [
         (index - 1) * CARD_WIDTH,
@@ -187,7 +199,7 @@ export default class screens extends Component {
       const description = this.props.navigation.state.params.description;
       const location = this.props.navigation.state.params.location;
       const image = this.props.navigation.state.params.image;
-      test = [test[0], test[1], test[2], {title:name, description:description, coordinate:location, image:test[3].image}];
+      test = [test[0], test[1], test[2], {title:name, description:description, coordinate:location, capacity:capacity, image:test[3].image}];
       console.log(test);
     }
     catch (error) {
@@ -268,7 +280,11 @@ export default class screens extends Component {
         >
 
           {test.map((marker, index) => (
-            <TouchableOpacity style={styles.card} key={index}  onPress={() => this.props.navigation.navigate('Description')}>
+            <TouchableOpacity style={styles.card} key={index}  onPress={() => this.props.navigation.navigate('Description', {
+            name:marker.title,
+            capacity:marker.capacity,
+            description:marker.description,
+            image: marker.image})}>
               <Image
                 source={marker.image}
                 style={styles.cardImage}

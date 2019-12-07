@@ -91,11 +91,14 @@ Des: {
   fontFamily: "Arial",
 },
 input: {
-    width: 200,
+    width: 280,
     height: 44,
     padding: 10,
-    marginLeft: 30,
+    marginLeft: 40,
     marginRight: 40,
     marginBottom: 10,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: 'black',
   }
 });

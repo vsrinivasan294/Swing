@@ -25,30 +25,35 @@ export default class DescriptionScreen extends React.Component {
         { uri: "https://i.imgur.com/TJzHJcZ.jpg" }
       ]
 
-    const title =  "Hammock Beach";
-    const description =  "This is the best Hammock on the beach";
+    const name = this.props.navigation.state.params.name;
+    const capacity = this.props.navigation.state.params.capacity;
+    const description = this.props.navigation.state.params.description;
+    const location = this.props.navigation.state.params.location;
+    const distance = this.props.navigation.state.params.distance;
+    const image = this.props.navigation.state.params.image;
+
     return (
     <View style={styles.textContent}>
-        <Text numberOfLines={1} style={styles.Destitle}>{"Beach Hammock"}</Text>
+        <Text numberOfLines={1} style={styles.Destitle}>{name}</Text>
         <View style={{
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
         <Image
-          source={require("./assets/images/ham.jpg")} style={styles.Image}>
+          source={image} style={styles.Image}>
         </Image>
         </View>
         <Text style={styles.Des}>
           <Text style={styles.Desbold}>{"Distance:"}</Text>
-          <Text style={styles.Des}> {"2 miles"} </Text>
+          <Text style={styles.Des}> {distance + " miles"} </Text>
         </Text>
         <Text style={styles.Des}>
           <Text style={styles.Desbold}>{"Capacity:"}</Text>
-          <Text style={styles.Des}> {"2 hammocks"} </Text>
+          <Text style={styles.Des}> {capacity + " hammocks"} </Text>
         </Text>
          <Text style={styles.Des}>
           <Text style={styles.Desbold}>{"Description:"}</Text>
-          <Text style={styles.Des}> {"Beautiful view with comfortable hammock. Only come here if you want to get a bad sunburn."} </Text>
+          <Text style={styles.Des}> {description} </Text>
         </Text>
       </View> 
     );
@@ -59,7 +64,7 @@ export default class DescriptionScreen extends React.Component {
 const styles = StyleSheet.create({
 
 Destitle: {
-  fontSize: 40,
+  fontSize: 30,
   marginTop: 20,
   marginLeft: 10,
   marginRight: 10,
