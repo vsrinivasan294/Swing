@@ -1,3 +1,5 @@
+console.disableYellowBox = true;
+
 import React, { useState, Component } from "react";
 
 import {
@@ -13,7 +15,6 @@ import {
   Dimensions,
   TouchableOpacity,
   Navigator,
-
 } from "react-native";
 import { TabNavigator } from "react-navigation";
 import { Container} from "native-base";
@@ -413,10 +414,9 @@ export default class screens extends Component {
 
 const styles = StyleSheet.create({
   addButton: {
-    width:50,
-    height:50,
+    width:45,
+    height:45,
     borderRadius: 15,
-    paddingTop: 5,
 
   },
   locationButton: {
@@ -520,7 +520,7 @@ const styles = StyleSheet.create({
   },
   search: {
     position: 'absolute',
-    top: 0,
+    top: "1%",
     right: 0,
   }
 });

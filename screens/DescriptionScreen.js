@@ -45,7 +45,8 @@ export default class DescriptionScreen extends React.Component {
         </View>
         <Text style={styles.Des}>
           <Text style={styles.Desbold}>{"Distance:"}</Text>
-          <Text style={styles.Des}> {distance + " miles"} </Text>
+          <Text style={styles.Des}> {
+            distance + " miles"} </Text>
         </Text>
         <Text style={styles.Des}>
           <Text style={styles.Desbold}>{"Capacity:"}</Text>
@@ -55,7 +56,7 @@ export default class DescriptionScreen extends React.Component {
           <Text style={styles.Desbold}>{"Description:"}</Text>
           <Text style={styles.Des}> {description} </Text>
         </Text>
-      </View>
+      </View> 
     );
   }
 }
@@ -64,26 +65,26 @@ export default class DescriptionScreen extends React.Component {
 const styles = StyleSheet.create({
 
 Destitle: {
-  fontSize: 30,
+  fontSize: 26,
   marginTop: 20,
   marginLeft: 10,
   marginRight: 10,
   textAlign: "center",
-  fontFamily: "Arial",
+  fontFamily: "Arial", 
 },
 Image: {
   marginTop: 20,
   height: 300,
   width: 300,
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'center', 
 },
 Desbold: {
   fontSize: 24,
   marginTop: 30,
   marginLeft: 40,
   marginRight: 40,
-  fontFamily: "Arial",
+  fontFamily: "Arial", 
   fontWeight: 'bold',
 },
 Des: {
@@ -91,6 +92,6 @@ Des: {
   marginTop: 30,
   marginLeft: 40,
   marginRight: 40,
-  fontFamily: "Arial",
+  fontFamily: "Arial", 
 }
 });
